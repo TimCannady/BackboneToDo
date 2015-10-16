@@ -1,3 +1,4 @@
+// for namespacing?
 var app = app || {};
 
 // todo model
