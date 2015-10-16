@@ -1,7 +1,7 @@
 // for namespacing?
 var app = app || {};
 
-// todo model
+// todo model (global...?)
 app.Todo = Backbone.Model.extend({
   defaults: {
     title: '',

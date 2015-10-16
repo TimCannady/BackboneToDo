@@ -11,7 +11,7 @@ var TodoList = Backbone.Collection.extend({
   // save all the todo items under the 'todos-backbone' namespace
   localStorage: new Backbone.LocalStorage('todos-backbone'),
 
-  // filter the list down to all todo items that are completed
+  // filter the list down to an array of all todo items that are completed. Filter() is an Underscore method.
   completed: function(){
     //why filter? why not just return this.todo.get('completed')
     return this.filter(function( todo ) {
@@ -19,12 +19,12 @@ var TodoList = Backbone.Collection.extend({
     })
   },
 
-  // filter the list down to all todo items that are remaining
+  // filter the list down to an array of all todo items that are remaining. Without() is an Underscore method.
   remaining: function(){
     return this.without.apply( this, this.completed());
   },
 
-  // keep the todos in sequential order despite being saved by an unordered GUID in the db. This generates the next order number for new items
+  // keep the todos in sequential order despite being saved by an unordered GUID in the db. This generates the next order number for new items. Last() is an Underscore method.
   nextOrder: function(){
     if (!this.length){
       return 1

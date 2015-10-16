@@ -7,7 +7,7 @@
 </head>
 <body>
 
-  <section>
+  <section id="todoapp">
     <header id="header">
       <h1>todos</h1>
       <input id="new-todo" placeholder="What needs to be done?" autofocus>
@@ -37,7 +37,7 @@
   </script>
 
   <!-- Stats Template for 'footer' -->
-  <script type="text/template" id="stats-complete">
+  <script type="text/template" id="stats-template">
     <span id="todo-count"><strong><%= remaining %></strong><%= remaining === 1 ? 'item' : 'items' %> left
     </span>
     <ul id='filters'>
