@@ -16,10 +16,20 @@ app.AppView = Backbone.View.extend({
   // when initialized, bind the relevant events on the 'todos' collection, when items are added or changed. What exactly is this doing?
   initialize: function(){
     this.allCheckbox = this.$('#toggle-all')[0];
+    // the same as writing:
+    // this.$input = app.AppView.$('#new-todo')
+    // Codeschool mentioned Backbone has a better built-in that doesn't rely on using the ID. Might look like this:
+    // $this.$input = this.$el.html();
     this.$input = this.$('#new-todo');
     this.$footer = this.$('#footer');
     this.$main = this.$('#main');
 
+    // two event listeners. note that we're only binding add and reset to the collection (app). We're going to delegate update and delete to the TodoView (model)
+
+    // is this a replacement for something like
+    // this.collection.on('add', this.addOne, this) ??
+
+    // answer: listenTo() sets the callback's context to the view when it creates the binding
     this.listenTo(app.Todos, 'add', this.addOne);
     this.listenTo(app.Todos, 'reset', this.addAll);
   },
