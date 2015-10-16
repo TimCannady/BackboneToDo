@@ -5,7 +5,6 @@ var app = app || {};
 // The Application
 
 // Our overall AppView is the top-level piece of UI
-// global..
 app.AppView = Backbone.View.extend({
   // Instead of generating a new element, bind to the existing skeleton of the App already present in the HTML. #todoapp is a <section> within index.html.
   el: '#todoapp',
@@ -81,6 +80,7 @@ app.AppView = Backbone.View.extend({
   },
 
   // add a single todo item to the list by creating a view for it, and appending its element to the #todo-list <ul>. How does this know to create a <li>? Maybe because append knows..
+  // answer: because later when we define the todo view, we wind up saying the default tagName is an <li>. So all new instances of todo views (eg, individual model views) are mounted to an <li>
   addOne: function( todo ){
     var view = new app.TodoView({ model: todo });
     $('#todo-list').append( view.render().el );

@@ -19,7 +19,7 @@ var TodoList = Backbone.Collection.extend({
     })
   },
 
-  // filter the list down to an array of all todo items that are remaining. Without() is an Underscore method.
+  // filter the list down to an array of all todo items that are remaining. Without()q is an Underscore method.
   remaining: function(){
     return this.without.apply( this, this.completed());
   },
