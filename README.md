@@ -1,0 +1,1 @@
+First time trying Backbone.js following the TodoMVC tutorial.
