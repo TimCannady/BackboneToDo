@@ -40,7 +40,7 @@ app.AppView = Backbone.View.extend({
     this.listenTo(app.Todos, 'add', this.addOne);
     this.listenTo(app.Todos, 'reset', this.addAll);
 
-    this.listenTo(app.Todos, 'change:completed', this.addOne);
+    this.listenTo(app.Todos, 'change:completed', this.filterOne);
     this.listenTo(app.Todos, 'filter', this.filterAll);
     this.listenTo(app.Todos, 'all', this.render);
 
@@ -69,6 +69,7 @@ app.AppView = Backbone.View.extend({
 
       this.$('#filters li a')
         .removeClass('selected')
+        // wat
         .filter('[href="#/' + ( app.todoFilter || '') + '"]')
         .addClass('selected');
     } else{
@@ -102,7 +103,8 @@ app.AppView = Backbone.View.extend({
 
   // this seems like it should be a model function, not a view
   newAttributes: function(){
-    return{
+    return {
+      // <this> is referring to the view, not the DOM element, since the callback is bound to the events hash. I'm guessing it's bound to the events hash because createOnEnter is what calls newAttributes, and createOnEnter is itself bound to the events hash...
       title: this.$input.val().trim(),
       order: app.Todos.nextOrder(),
       completed: false
