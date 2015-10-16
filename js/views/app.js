@@ -89,6 +89,49 @@ app.AppView = Backbone.View.extend({
   addAll: function(){
     this.$('#todo-list').html('')
     app.Todos.each(this.addOne,this)
+  },
+
+  filterOne: function(todo){
+    todo.trigger('visible')
+  },
+
+  filterAll: function(){
+    app.Todos.each(this.filterOne, this);
+  },
+
+
+  // this seems like it should be a model function, not a view
+  newAttributes: function(){
+    return{
+      title: this.$input.val().trim(),
+      order: app.Todos.nextOrder(),
+      completed: false
+    }
+  },
+
+  // if you hit return in the main input field, create a Todo model, persisting it to localStorage
+  createOnEnter: function( event ){
+    if ( event.which !== ENTER_KEY || !this.$input.val().trim()) {
+      return
+    }
+
+    app.Todos.create( this.newAttributes() )
+    this.$input.val('')
+  },
+
+  // clear all completed todo items, destroying their models
+  clearCompleted: function(){
+    _.invoke(app.Todos.completed(), 'destroy');
+    return false
+  },
+
+  toggleAllComplete: function(){
+    var completed = this.allCheckbox.checked;
+
+    app.Todos.each(function( todo ){
+      todo.save({
+        'completed': completed
+      })
+    })
   }
-aa
 })
