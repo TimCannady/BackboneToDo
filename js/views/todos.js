@@ -1,5 +1,7 @@
 var app = app || {};
 
+// not sure why this file is called todos.js since I think it's just for an individual model. Seems it should be called todo.js - singular. Better yet, todo_view.js
+
 app.TodoView = Backbone.View.extend({
   tagName: 'li',
 
