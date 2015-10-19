@@ -41,6 +41,8 @@ app.AppView = Backbone.View.extend({
 
     this.listenTo(app.Todos, 'change:completed', this.filterOne);
     this.listenTo(app.Todos, 'filter', this.filterAll);
+
+    // all is used so that the collection view will re-render when any of the special events happen - I think even the ones that aren't explicitly listed like the ones we used here. For example, calling destroy() on a model knows to remove the model from the Todos collection. So the listener below will trigger and the collection view will know to re-render.
     this.listenTo(app.Todos, 'all', this.render);
 
     // load any preexisting todos (in our case from localStorage). Recall that app.Todos is the name of the instantiated collection.

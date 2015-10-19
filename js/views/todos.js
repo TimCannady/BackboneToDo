@@ -16,9 +16,11 @@ app.TodoView = Backbone.View.extend({
     'blur .edit': 'close'
   },
 
-  // re-render the model's view anytime the model changes
+  // listeners
+  // what is this.model? how is it connected?
   initialize: function(){
     this.listenTo(this.model, 'change', this.render);
+    // this.remove deletes the view and automatically removes the associated element from the DOM. Since we used listenTo to bind the view's listeners to its model, this.remove also unbinds the listening callbacks from the model ensuring that a memory leak does not occur
     this.listenTo(this.model, 'destroy', this.remove);
     this.listenTo(this.model, 'visible', this.toggleVisible)
   },
@@ -27,6 +29,7 @@ app.TodoView = Backbone.View.extend({
     // the line below uses Underscore's template() method to create an HTML fragment using the attributes from the model that were passed upon instantiating the view. Next, it replaces the content of the view's element, being an <li>!
     this.$el.html( this.template( this.model.attributes));
 
+    // is toggleClass() a built-in?
     this.$el.toggleClass('completed', this.model.get('completed'))
     this.toggleVisible()
 
@@ -78,7 +81,9 @@ app.TodoView = Backbone.View.extend({
     }
   },
 
-  // remove the item, destroy the model from *localSToragae* and delete its view
+  // remove the item, destroy the model from *localStorage*. Furthermore, we had set a listener so that when this.model is destroyed, that it also removed this view from the DOM. Destroy also removes the model from the Todos collection, which triggers a remove event on the collection.
+
+  // This also feels like we are telling the model how to destroy itself...
   clear: function(){
     this.model.destroy()
   }
