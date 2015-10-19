@@ -9,19 +9,27 @@ app.TodoView = Backbone.View.extend({
   template: _.template( $('#item-template').html()),
 
   events: {
+    'click .toggle': 'togglecompleted',
     'dblclick label': 'edit',
+    'click .destroy': 'clear',
     'keypress .edit': 'updateOnEnter',
-    'blur .edit': close
+    'blur .edit': 'close'
   },
 
   // re-render the model's view anytime the model changes
   initialize: function(){
     this.listenTo(this.model, 'change', this.render);
+    this.listenTo(this.model, 'destroy', this.remove);
+    this.listenTo(this.model, 'visible', this.toggleVisible)
   },
 
   render: function(){
     // the line below uses Underscore's template() method to create an HTML fragment using the attributes from the model that were passed upon instantiating the view. Next, it replaces the content of the view's element, being an <li>!
     this.$el.html( this.template( this.model.attributes));
+
+    this.$el.toggleClass('completed', this.model.get('completed'))
+    this.toggleVisible()
+
     // this.$input means the user's input which is entered into the html input with the .edit class. I'm not sure why we need to cache it here, though.
     this.$input = this.$('.edit');
     return this
