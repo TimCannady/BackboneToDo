@@ -3,6 +3,7 @@ var app = app || {};
 // not sure why this file is called todos.js since I think it's just for an individual model. Seems it should be called todo.js - singular. Better yet, todo_view.js
 
 app.TodoView = Backbone.View.extend({
+
   tagName: 'li',
 
   template: _.template( $('#item-template').html()),
@@ -24,6 +25,24 @@ app.TodoView = Backbone.View.extend({
     // this.$input means the user's input which is entered into the html input with the .edit class. I'm not sure why we need to cache it here, though.
     this.$input = this.$('.edit');
     return this
+  },
+
+  // toggles visibility of the item
+  toggleVisible: function(){
+    this.$el.toggleClass( 'hidden', this.isHidden())
+  },
+
+  // determines if the item should be hidden
+  isHidden: function(){
+    var isCompleted = this.model.get('completed');
+    return (  // hidden cases only
+      (!isCompleted && app.TodoFilter === 'completed') || (isCompleted && app.TodoFilter === 'active')
+      )
+  },
+
+  // toggle the 'completed' state of the model
+  togglecompleted: function(){
+    this.model.toggle()
   },
 
   edit: function(){
@@ -49,5 +68,11 @@ app.TodoView = Backbone.View.extend({
     if( e.which === ENTER_KEY ){
       this.close()
     }
+  },
+
+  // remove the item, destroy the model from *localSToragae* and delete its view
+  clear: function(){
+    this.model.destroy()
   }
+
 });

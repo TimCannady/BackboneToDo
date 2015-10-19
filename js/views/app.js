@@ -1,4 +1,4 @@
-// I think this is for the todo collection. But the tutorial is simply calling it AppView
+// I think this is the view for the todo collection. But the tutorial is simply calling it AppView
 
 var app = app || {};
 
@@ -43,7 +43,7 @@ app.AppView = Backbone.View.extend({
     this.listenTo(app.Todos, 'filter', this.filterAll);
     this.listenTo(app.Todos, 'all', this.render);
 
-    // load any preexisting todos (in our case from localStorage)
+    // load any preexisting todos (in our case from localStorage). Recall that app.Todos is the name of the instantiated collection.
     app.Todos.fetch()
   },
 
@@ -111,12 +111,13 @@ app.AppView = Backbone.View.extend({
     }
   },
 
-  // if you hit return in the main input field, create a Todo (model??), persisting it to localStorage
+  // creates a new Todo model and persists it in localStorage when a user hits enter inside the <input/> field.
   createOnEnter: function( event ){
     if ( event.which !== ENTER_KEY || !this.$input.val().trim()) {
       return
     }
 
+    // recall that app.Todos is the name we gave the instantiated collection. What the code below is doing is creating a new MODEL. I think this is Backbone magic. It looks like it's creating a new collection. But I guess when we call create() on an INSTANCE of a collection, that it simply creates a new model instance and then attributes it to the collection instance
     app.Todos.create( this.newAttributes() )
     this.$input.val('')
   },
