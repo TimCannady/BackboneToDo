@@ -1,7 +1,7 @@
 var app = app || {};
 
 var Workspace = Backbone.Router.extend({
-  routes{
+  routes: {
     '*filter': 'setFilter'
   },
 
@@ -11,6 +11,7 @@ var Workspace = Backbone.Router.extend({
       param = param.trim();
     }
 
+    // sets app.TodoFilter to the param passed in the URL
     app.TodoFilter = param || '';
 
     // trigger a collection filter event, causing hiding/unhiding of Todo view items

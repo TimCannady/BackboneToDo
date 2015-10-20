@@ -2,7 +2,7 @@
 var app = app || {};
 
 // todo collection
-// the collection of todos is backed by *localStorage* instead of a remote server. 'Local Storage is a drop-in replacement for Backbone.sync() to handle saving to a localStorage database'
+// the collection of todos is backed by *localStorage* instead of a remove server. 'Local Storage is a drop-in replacement for Backbone.sync() to handle saving to a localStorage database'
 var TodoList = Backbone.Collection.extend({
 
   // connect the collection to the model
@@ -38,5 +38,5 @@ var TodoList = Backbone.Collection.extend({
   }
 })
 
-// create our global collection of todos
+// create our (global) collection of todos
 app.Todos = new TodoList();
